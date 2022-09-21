@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	<title>onlineduka | {{prods.first.subCategory.name}}</title>
+{% endblock %}
+
+{% block desc %}
+	<meta name="description" content="{{prods.first.subCategory.desc}}">
+{% endblock %}
+
+{% block customStyles %}
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_responsive.css' %}">
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}"> -->
+{% endblock %}
+
+{% block content %}
+		<!-- Home -->
+			<div class="banner2 animated bounceIn">
+		<h1>Become an Agent</h1>
+			<a href="{% url 'accounts:createAgent' %}"><button class="btn btn-primary">Register</button></a>
+	</div>
+
+	<div class="home">
+		<div class="home_background parallax-window" data-parallax="scroll" style="background-image:url({% static 'images/banner_background.jpg' %})"></div>
+		<div class="home_overlay"></div>
+		<div class="home_content d-flex flex-column align-items-center justify-content-center">
+			{% if cat %}
+				<h2 class="home_title">{{prods.first.subCategory.category.name}}</h2>
+			{% else%}
+				<h2 class="home_title">{{prods.first.subCategory.name}}</h2>
+			{% endif %}
+		</div>
+	</div>
+
+
+	<!-- Shop -->
+
+	<div class="shop">
+		<div class="container">
+			<div class="row">
+					
+
+					<div class="shop_content" class="col-12">
+						
+						<div class="product_grid">
+							<div class="product_grid_border"></div>
+
+							<!-- Product Item -->
+								{% for prod in prods %}
+								<div class="product_item is_new" style="margin-bottom: 30px;">
+									<div class="product_border"></div>
+									<div class="product_image d-flex flex-column align-items-center justify-content-center"><a href="{% url 'product:prod' prod.slug %}"><img src="{{prod.prodmedia_set.first.pic.url }}" alt="" height="120" style="width: auto;"></a></div>
+									<div class="product_content">
+										<div class="product_price">Kshs. {{prod.price }}</div>
+										<div style="height: 60px; padding: 15px;"><a href="{% url 'product:prod' prod.slug %}" tabindex="0" style="color: black;">{{prod.name}}</a></div>
+									</div>
+									<div class="product_fav" align="right"><a class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Bargain</a></div>
+									<ul class="product_marks">
+										{% if prod.origPrice %}
+										<li class="product_mark product_discount">-{{prod.discount}}%</li>
+										{% endif %}
+
+										<li class="product_mark product_new">{{prod.status}}</li>
+									</ul>
+								</div>
+								{% endfor %}
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+	</div>
+
+		<div class="banner_advert" animate heartBeat>
+		<div class="big-text animate heartBeat">
+			<h1>Do you want to become our Agent??</h1>
+		</div>
+		<div><h4>Just One click away</h4></div>
+		<a href="{% url 'accounts:createAgent' %}" class="btn btn-primary">Click me!</a>
+	</div><br><br>
+
+	<!-- Recently Viewed -->
+
+	<div class="viewed">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="viewed_title_container">
+						<h3 class="viewed_title">Hot deals</h3>
+						<div class="viewed_nav_container">
+							<div class="viewed_nav viewed_prev"><i class="fas fa-chevron-left"></i></div>
+							<div class="viewed_nav viewed_next"><i class="fas fa-chevron-right"></i></div>
+						</div>
+					</div>
+
+					<div class="viewed_slider_container">
+						
+						<!-- Recently Viewed Slider -->
+
+						<div class="owl-carousel owl-theme viewed_slider">
+							
+							<!-- Recently Viewed Item -->
+							{% for hotDeal in hotDeals %}
+							<div class="owl-item">
+								<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+									<div class="viewed_image"><a href="{% url 'product:prod' hotDeal.slug %}"><img src="{{hotDeal.prodmedia_set.first.pic.url}}" alt="" height="120" style="width: auto;"></a></div>
+									<div class="viewed_content text-center">
+										<div class="viewed_price">Kshs {{hotDeal.price }}</div>
+										<div class="viewed_name"><a href="{% url 'product:prod' hotDeal.slug %}">{{hotDeal.name}}</a></div>
+									</div>
+									<ul class="item_marks">
+										{% if hotDeal.origPrice %}
+										<li class="item_mark item_discount">-{{hotDeal.discount}}%</li>
+										{% endif %}
+										<li class="item_mark item_new">new</li>
+									</ul>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock%}
+
+{% block customScripts %}
+	<script src="{% static 'plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+	<script src="{% static 'plugins/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+	<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+	<script src="{% static 'js/shop_custom.js' %}"></script>
+{% endblock %}

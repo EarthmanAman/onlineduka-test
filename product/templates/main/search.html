@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	<title>search</title>
+{% endblock %}
+
+{% block customStyles %}
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_responsive.css' %}">
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}"> -->
+{% endblock %}
+
+{% block content %}
+		<!-- Home -->
+<!-- 
+	<div class="home">
+		<div class="home_background parallax-window" data-parallax="scroll" style="background-image:url({% static 'images/banner_background.jpg' %}); background-size: "></div>
+		<div class="home_overlay"></div>
+		<div class="home_content d-flex flex-column align-items-center justify-content-center">
+			<h2 class="home_title">Search Results ({{prods.count}})</h2>
+		</div>
+	</div>
+ -->
+	<!-- Shop -->
+	{% if pop %}
+				<br><br>
+
+			<div class="container">
+				<div class="row">
+					<div class="jumbotron">
+					  <h1 class="display-4">Become an agent</h1>
+					  <p class="lead">Join Online duka sales team and earn commissions on sales made to customers that you refer to us. Order items for your friends, collegues, family etc. You can earn as much as you wish from the comfort of your home</p>
+					  <hr class="my-4">
+					  <p></p>
+					  <p class="lead">
+					    <a class="btn btn-primary btn-lg" href="{% url 'accounts:createAgent'%}" role="button">Register</a>
+					    <a class="btn btn-warning btn-lg" href="{% url 'product:index'%}" role="button">Continue shopping</a>
+					  </p>
+					</div>
+			
+			</div>
+		</div>
+		{% endif %}
+		{% if noResult %}<br><br>
+		<div class="col-md-8 offset-lg-2">
+			<div class="alert alert-warning" align="center">
+					<h2>The product you search does not match any. Send us the product name so that we can add it</h2>
+				
+					<form action="" method="post" class="form-group">
+						{% csrf_token%}
+						<label>Name</label>
+						<input type="text" name="product" class="form-control"><br>
+						<label>Phone Number</label>
+						<input type="number" name="phoneNumber" class="form-control"><br>
+						<div align="center">
+							<button type="submit" class="btn btn-primary">Send</button>
+						</div>
+					</form>
+			
+			</div>
+		</div>
+		{% endif %}
+		{% if send %}	
+		<br>
+			<div class="col-md-8 offset-lg-2">
+				<div class="alert alert-success" align="center">
+						<h2>We will try to feature your product of interest next time. Thank you</h2>
+						<a href="{% url 'product:index' %}"><button class="btn btn-primary">Continue shopping</button></a>
+				</div>
+			</div>
+		{% endif %}
+	<div class="shop">
+		<div class="container">
+			<div class="row">
+					
+
+					<div class="shop_content" class="col-12">
+						
+						<div class="product_grid">
+							<div class="product_grid_border"></div>
+
+							<!-- Product Item -->
+								{% for prod in prods %}
+								<div class="product_item is_new" style="margin-bottom: 30px;">
+									<div class="product_border"></div>
+									<div class="product_image d-flex flex-column align-items-center justify-content-center"><a href="{% url 'product:prod' prod.slug %}"><img src="{{prod.prodmedia_set.first.pic.url }}" alt="" height="120" style="width: auto;"></a></div>
+									<div class="product_content">
+										<div class="product_price">Kshs. {{prod.price }}</div>
+										<div style="height: 60px; padding: 15px;"><a href="{% url 'product:prod' prod.slug %}" tabindex="0" style="color: black;">{{prod.name}}</a></div>
+									</div>
+									<div class="product_fav" align="right"><a class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Bargain</a></div>
+									<ul class="product_marks">
+										{% if prod.origPrice %}
+										<li class="product_mark product_discount">-{{prod.discount}}%</li>
+										{% endif %}
+										<li class="product_mark product_new">{{prod.status}}</li>
+									</ul>
+								</div>
+								{% endfor %}
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+	</div>
+
+	<!-- Recently Viewed -->
+<!-- 
+	<div class="viewed">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="viewed_title_container">
+						<h3 class="viewed_title">Hot deals</h3>
+						<div class="viewed_nav_container">
+							<div class="viewed_nav viewed_prev"><i class="fas fa-chevron-left"></i></div>
+							<div class="viewed_nav viewed_next"><i class="fas fa-chevron-right"></i></div>
+						</div>
+					</div>
+ -->
+					<!-- <div class="viewed_slider_container"> -->
+						
+						<!-- Recently Viewed Slider -->
+
+						<!-- <div class="owl-carousel owl-theme viewed_slider"> -->
+							
+							<!-- Recently Viewed Item -->
+<!-- 							{% for hotDeal in hotDeals %}
+							<div class="owl-item">
+								<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+									<div class="viewed_image"><img src="{{hotDeal.prodmedia_set.first.pic.url}}" alt="" width="100" height="100"></div>
+									<div class="viewed_content text-center">
+										<div class="viewed_price">Kshs {{hotDeal.price }}<span>$300</span></div>
+										<div class="viewed_name"><a href="{% url 'product:prod' hotDeal.slug %}">{{hotDeal.name}}</a></div>
+									</div>
+									<ul class="item_marks">
+										<li class="item_mark item_discount">-25%</li>
+										<li class="item_mark item_new">new</li>
+									</ul>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Bargain</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        You can bargain your price through the following way. Just click one.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        {% if cartIn.cartprod_set.all %}
+        <a href="https://api.whatsapp.com/send?phone=254728206830&text=Hi.
+
+			I would like to enquire/bargain order:
+
+			https://onlineduka.co.ke{% url 'cart:cartDetail' cartIn.id %}" class="btn btn-success">Whatsapp</a>
+		{% else %}
+			 <a href="https://api.whatsapp.com/send?phone=254728206830&text=Hi.
+
+			I would like to enquire/bargain" class="btn btn-success">Whatsapp</a>
+		{% endif %}
+        <button type="button" class="btn btn-primary">Phone : 0728206830</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}
+
+{% block customScripts %}
+	<script src="{% static 'plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+	<script src="{% static 'plugins/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+	<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+	<script src="{% static 'js/shop_custom.js' %}"></script>
+{% endblock %}

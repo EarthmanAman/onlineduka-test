@@ -1,0 +1,157 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+{% block title %}
+	<title>onlineduka | orders</title>
+{% endblock %}
+
+{% block customStyles%}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_responsive.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_responsive.css' %}">
+{% endblock%}
+
+
+{% block content %}
+		<div class="cart_section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div>
+						<a href="{% url 'cart:orders' %}"><button class="btn btn-primary">Uncompleted Orders</button></a>
+					</div><br>
+					<div class="cart_container">
+						{% if order%}
+						
+							<div id="products" class="col-lg-8 offset-lg-1">
+							<table class="table table-striped">
+								<thead class="thead-dark">
+									<tr>
+										<th>Pic</th>
+										<th>Name</th>
+										<th>Quantity</th>
+										<th>Price</th>
+										<th>More</th>
+										<th>Remove</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for cartProd in order.cartprod_set.all %}
+										<tr>
+											<td><img src="{{cartProd.prod.prodmedia_set.first.pic.url}}" alt="product pic" width="50" height="50"></td>
+											<td>{{cartProd.prod.name}}</td>
+											<td>{{cartProd.quantity}}</td>
+											<td>{{cartProd.total}}</td>
+											<td><a href="{% url 'product:prod' cartProd.prod.slug %}"><button class="btn btn-primary">More</button></a></td>
+											<td><a href="?"><button class="btn btn-danger">Remove</button></a></td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+						{% endif %}
+						{% if orders %}
+							<div class="cart_title">Orders</div>
+						{% else %}
+							<div align="center" class="alert alert-warning">
+								<h3>No orders</h3>
+							</div>
+						{% endif %}
+						{% for order in orders%}
+
+						<div class="cart_items">
+							<ul class="cart_list">
+								<li class="cart_item clearfix">
+									<div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+										<div class="cart_item_name cart_info_col">
+											<div class="cart_item_title">Customer</div>
+											<div class="cart_item_text">{{order.customer.name}}</div>
+										</div>
+										<div class="cart_item_name cart_info_col">
+											<div class="cart_item_title">Location</div>
+											<div class="cart_item_text">{{order.location}}</div>
+										</div>
+										<div class="cart_item_name cart_info_col">
+											<div class="cart_item_title">Phone Number</div>
+											<div class="cart_item_text">{{order.customer.phoneNumber}}</div>
+										</div>
+						
+										<div class="cart_item_total cart_info_col">
+											<div class="cart_item_title">Products</div>
+											<div class="cart_item_text"><a href="?orderId={{order.id}}"><button class="btn btn-info">Products</button></a></div>
+										</div>
+										<div class="cart_item_total cart_info_col">
+											<div class="cart_item_title">Status</div>
+										
+												<div class="cart_item_text">
+													<form action="" method="post">
+														{% csrf_token %}
+														<input type="hidden" name="cartId" value="{{order.id }}">
+														<button type="submit" class="btn btn-warning">Completed</button>
+														
+													</form></div>
+										</div>
+										<div class="cart_item_total cart_info_col">
+											<div class="cart_item_title">More</div>
+											<div class="cart_item_text"><a href="{% url 'cart:cartDetail' order.id%}"><button class="btn btn-info">More</button></a></div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+
+						<div style="display: none;" id="products" class="col-lg-6 offset-lg-2">
+							<table class="table table-striped">
+								<thead class="thead-dark">
+									<tr>
+										<th>Pic</th>
+										<th>Name</th>
+										<th>Quantity</th>
+										<th>Price</th>
+										<th>More</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for cartProd in order.cartprod_set.all %}
+										<tr>
+											<td><img src="{{cartProd.prod.prodmedia_set.first.pic.url}}" alt="product pic" width="50" height="50"></td>
+											<td>{{cartProd.prod.name}}</td>
+											<td>{{cartProd.quantity}}</td>
+											<td>{{cartProd.total}}</td>
+											<td><a href="{% url 'product:prod' cartProd.prod.slug %}"><button class="btn btn-primary">More</button></a></td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+						{% endfor %}
+						
+					<!-- 	<div class="cart_buttons">
+							
+							<button type="button" class="button cart_button_checkout" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Back</button>
+						</div -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block customScripts %}
+	<script type="text/javascript">
+		function displayProd(event) {
+			event.preventDefault()
+			if (document.getElementById('products').style.display == "none"){
+				document.getElementById('products').style.display = "block";
+			}
+			else {
+				document.getElementById('products').style.display = "none";
+			}
+		}
+	</script>
+	<script type="text/javascript" src="{% static 'js/cart_custom.js'%}"></script>
+{% endblock %}

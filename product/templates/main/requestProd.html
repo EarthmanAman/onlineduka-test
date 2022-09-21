@@ -1,0 +1,77 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+	<title>onlineduka | products</title>
+{% endblock %}
+
+{% block customStyles%}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_responsive.css' %}">
+{% endblock%}
+
+
+{% block content %}
+		<div class="cart_section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="cart_container">
+						{% if requestProds%}
+						<div class="cart_title">Requested Products</div>
+						{% else %}
+							<div align="center" class="alert alert-warning">
+								<h3>No request products</h3>
+							</div>
+						{% endif %}
+						{% for requestProd in requestProds%}
+
+						<div class="cart_items">
+							<ul class="cart_list">
+								<li class="cart_item clearfix">
+									<div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+										<div class="cart_item_name cart_info_col">
+											<div class="cart_item_title">Name</div>
+											<div class="cart_item_text">{{requestProd.name}}</div>
+										</div>
+										<div class="cart_item_name cart_info_col">
+											<div class="cart_item_title">Phone Number</div>
+											<div class="cart_item_text">{{requestProd.phoneNumber}}</div>
+										</div>
+										<div class="cart_item_total cart_info_col">
+											<div class="cart_item_title">Add</div>
+											<div class="cart_item_text"><a href="{% url 'product:createProd'%}" class="btn btn-primary">Add</a></div>
+										</div>
+										<div class="cart_item_total cart_info_col">
+											<div class="cart_item_title">Delete</div>
+											<div class="cart_item_text">
+												<form action="" method="post">
+													{% csrf_token %}
+													<input type="hidden" name="id" value="{{requestProd.id}}">
+													<button type="submit" class="btn btn-delete">Delete</button>
+													
+												</form>
+											</div>
+												
+										</div>
+							
+									</div>
+								</li>
+							</ul>
+						</div>
+
+
+						{% endfor %}
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{% block customScripts %}
+	<script type="text/javascript" src="{% static 'js/cart_custom.js'%}"></script>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	<title>onlineduka | agent | info</title>
+{% endblock %}
+{% block customStyles%}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/blog_single_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/blog_single_responsive.css' %}">
+<!-- 	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_responsive.css' %}"> -->
+{% endblock%}
+
+{% block content %}
+	
+	<div class="single_post">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2">
+					<a href="{% url 'accounts:agentDetail' request.user.agent.idNumber %}" class="btn btn-primary">Go To Dashboard</a>
+					<div class="alert alert-heading" align="center"><h1>Greetings super agent!!!</h1></div>
+					<div class="single_post_text">
+						<p class="alert alert-success">Congratulations on joining the onlineduka sales team as an agent</p>
+
+						<div class="single_post_quote text-center">
+							<div class="quote_image"><img src="images/quote.png" alt=""></div>
+							<div class="quote_text">For any queries call/sms/whatsapp</div>
+							<div class="quote_name">0728206830 or 0705498000</div>
+						</div>
+
+						<p>You will earn high commisions for placing orders for your customers. You only need to take screenshots of the various items in the website and advertise in social media and also to your friends, family etc. Utilize Facebook groups, whatsapp groups, instagram etc</p>
+						<p>Commisions are paid via <strong>MPESA</strong> or <strong>Artel money</strong> to you on <strong>15th every month</strong> We deliver countrywide within a day! that will enable you to get customers more easily.</p>
+						<p><strong>COMMISIONS ARE PROCESSED FOR SUCCESSFUL ORDERS</strong></p>
+						<p>We are located in Nairobi CBD, Luthuli Avenue, Digital Electronics House</p>
+						<p class="alert alert-warning">Make sure you are in one of the agents whatsapp groups, to get updates and training</p>
+						<p>You will get promoted as you grow your sales and earn higher commissions. Recruit more agents and form a team under you to earn from your team sales</p><br>
+
+						<h3 style="border-bottom: 2px solid black;">COMMISSION TABLE AND AGENTS LEVELS</h3>
+						<p>There are 8 levels that you can join as you grow your sales. Each level has requirements to meet, in order to join and remain in the level</p>
+						<img src="{% static 'images/comTable.jpeg'%}" alt="commission table" style="width: 100%; height: 400px;">
+					<!-- 	<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Level</th>
+									<th>Item Price Range</th>
+									<th>Commission</th>
+									<th>Requirements</th>
+									<th>Demotion</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Recruit</td>
+									<td>Below 10000<br><br>Above 10000</td>
+									<td>3.5%<br><br><br>Kshs 350</td>
+									<td>1 sale (month)<br><br>1 team member(active)</td>
+									<td>N/A</td>
+								</tr>
+								<tr>
+									<td>Rockie</td>
+									<td>Below 10000<br><br>Above 10000</td>
+									<td>4.0%<br><br><br>Kshs 400</td>
+									<td>2 sale (month)<br><br>Above 600 commission<br><br>3 team member(active)</td>
+									<td>2 months of missing target<br><br>team members inactive 2 months</td>
+								</tr>
+								<tr>
+									<td>Captain</td>
+									<td>Below 10000<br><br>Above 10000</td>
+									<td>4.5%<br><br><br>Kshs 450</td>
+									<td>3 sale (month)<br><br>Above 700 commission<br><br>5 team member(active)</td>
+									<td>2 months of missing target<br><br>team members inactive 2 months</td>
+								</tr>
+								<tr>
+									<td>Superstar</td>
+									<td>Below 10000<br><br>Above 10000</td>
+									<td>5%<br><br><br>Kshs 500</td>
+									<td>4 sale (month)<br><br>Above 800 commission<br><br>7 team member(active)</td>
+									<td>2 months of missing target<br><br>team members inactive 2 months</td>
+								</tr>
+								<tr>
+									<td>Veteran</td>
+									<td>Below 10000<br><br>Above 10000</td>
+									<td>5.5%<br><br><br>Kshs 550</td>
+									<td>5 sale (month)<br><br>Above 1000 commission<br>9 team member(active)</td>
+									<td>2 months of missing target<br><br>team members inactive 2 months</td>
+								</tr>
+								<tr>
+									<td>Master</td>
+									<td>Below 10000<br><br>Above 10000</td>
+									<td>6.0%<br><br><br>Kshs 600</td>
+									<td>6 sale (month)<br><br>Above 1200 commission<br><br>11 team member(active)</td>
+									<td>2 months of missing target<br><br>team members inactive 2 months</td>
+								</tr>
+								<tr>
+									<td>Ambassador</td>
+									<td>Below 10000<br><br>Above 10000</td>
+									<td>6.5%<br><br><br>Kshs 650</td>
+									<td>8 sales (month)<br><br>Above 1500 commission<br>13 team member(active)</td>
+									<td>2 months of missing target<br><br>team members inactive 2 months</td>
+								</tr>
+								<tr>
+									<td>King</td>
+									<td>Below 10000<br><br>Above 10000</td>
+									<td>7%<br><br><br>Kshs 700</td>
+									<td>10 sales (month)<br><br>Above 2000 commission<br><br>15 team member(active)</td>
+									<td>2 months of missing target<br><br>team members inactive 2 months</td>
+								</tr>
+							</tbody>
+						</table> -->
+						<br>
+						<h3 style="border-bottom: 2px solid black">About The commission table</h3>
+						<p>Depending on your hardwork you can be promoted to a higher level and earn more.<br>There are 3 requirements to remain or upgrade to a specific level:<br>
+								<li>Number of sales in the last one month</li>
+								<li>Minimum commission you must earn in one month</li>
+								<li>Number of active team members</li>
+							
+						</p>
+						<p><strong>Earning from team members</strong><br>You will get 10% of your team members earnings every month</p>
+
+						<h3 style="border-bottom: 2px solid black; color: red;">About Demotion</h3>
+						<p>If you miss your target for 2 consecutive months, you will be demoted to a lower level. Your team members will also be demoted if they miss their targets for 2 consecutive months. You only need your team members to make atleast one sale per month for them to be part of your active members</p>
+							<div class="single_post_quote text-center">
+							<div class="quote_image"><img src="images/quote.png" alt=""></div>
+							<div class="quote_text">For any queries call/sms/whatsapp</div>
+							<div class="quote_name">0728206830 or 0705498000</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block customScripts %}
+	<script type="text/javascript" src="{% static 'js/blog_single_custom.js'%}"></script>
+{% endblock %}

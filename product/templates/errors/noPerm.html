@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	<title>onlineduka | agent | info</title>
+{% endblock %}
+{% block customStyles%}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/blog_single_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/blog_single_responsive.css' %}">
+<!-- 	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_responsive.css' %}"> -->
+{% endblock%}
+
+{% block content %}
+	
+	<div class="single_post">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2">
+					<div class="alert alert-warning">
+						<h1>You Don't have permission to view this page</h1>
+					</div>
+					<div align="center">
+						<a href="{% url 'product:index' %}">Go back to site</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block customScripts %}
+	<script type="text/javascript" src="{% static 'js/blog_single_custom.js'%}"></script>
+{% endblock %}

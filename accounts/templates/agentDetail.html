@@ -1,0 +1,157 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+{% block title %}
+	<title>agent | {{agent.user.username}}</title>
+{% endblock %}
+
+{% block customStyles%}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_responsive.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_responsive.css' %}">
+{% endblock%}
+
+
+{% block content %}
+		<div class="cart_section">
+		<div class="container">
+				<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="cart_container">
+						<div>
+							<a href="{% url 'accounts:agentPaidJobs' agent.idNumber %}"><button class="btn btn-primary">View Paid jobs</button></a>
+						</div><br>
+						<div class="cart_title">My Profile</div>
+
+						<div class="cart_items">
+							<ul class="cart_list">
+								<li class="cart_item clearfix">
+									<div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+										<div class="cart_item_name cart_info_col">
+											<div class="cart_item_title">ID</div>
+											<div class="cart_item_text">{{agent.idNumber}}</div>
+										</div>
+									
+										<div class="cart_item_price cart_info_col">
+											<div class="cart_item_title">Promo Code</div>
+											<div class="cart_item_text">{{agent.promoCode}}</div>
+										</div>
+										<div class="cart_item_total cart_info_col">
+											<div class="cart_item_title">Status</div>
+											{% if agent.accepted %}
+												<div class="cart_item_text"><a href="" class="btn btn-success">Accepted</a></div>
+											{% else %}
+												<div class="cart_item_text"><a href="" class="btn btn-warning">Unaccepted</a></div>
+											{% endif %}
+										</div>
+											<div class="cart_item_total cart_info_col">
+											<div class="cart_item_title">More Info</div>
+												<div class="cart_item_text"><a href="{% url 'accounts:agentInfo' %}" class="btn btn-info">Info</a></div>
+											
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<!-- Order Total -->
+					</div>
+				</div>
+			</div><br><br>
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="cart_container">
+						{% if added%}
+							<div align="center" class="alert alert-success">
+								<h3>The work you did was successfully done.</h3>
+							</div>
+						{% endif %}
+						<div class="cart_title">Job</div>
+
+						{% for agentEarn in agentEarns %}
+						{% for cart in agentEarn.cart_set.all %}
+						<div class="cart_items">
+							<ul class="cart_list">
+								<li class="cart_item clearfix">
+									<div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+										<div class="cart_item_name cart_info_col">
+											<div class="cart_item_title">User</div>
+											<div class="cart_item_text">{{cart.customer.name}}</div>
+										</div>
+									
+										<div class="cart_item_price cart_info_col">
+											<div class="cart_item_title">Order Price</div>
+											<div class="cart_item_text">Kshs {{cart.total}}</div>
+										</div>
+										<div class="cart_item_price cart_info_col">
+											<div class="cart_item_title">Order status</div>
+											{% if cart.isCompleted %}
+												<div class="cart_item_text"><a href="" class="btn btn-success">Completed</a></div>
+											{% else %}
+												<div class="cart_item_text"><a href="" class="btn btn-warning">Ordered</a></div>
+											{% endif %}
+										
+										</div>
+										<div class="cart_item_total cart_info_col">
+											<div class="cart_item_title">My Earn</div>
+											{% if cart.agentEarn %}
+											<div class="cart_item_text">{{cart.agentEarn}}</div>
+											{% else %}
+											<div class="cart_item_text">Unconfirmed</div>
+											{% endif %}
+										</div>
+										{% if request.user.is_superuser %}
+										<div class="cart_item_name cart_info_col">
+											<div class="cart_item_title">Earn</div>
+											<form action="" method="post">
+												{% csrf_token %}
+												<input type="hidden" name="cartId" value="{{cart.id}}">
+
+													<div class="cart_item_text"><input style="width: 60px;" type="number" name="earn"></div>
+												</div>
+												<div class="cart_item_price cart_info_col">
+													<div class="cart_item_title">Submit</div>
+											
+														<div class="cart_item_text"><button type="submit" class="btn btn-primary">submit</button></div>
+												
+												</div>
+										</form>
+										{% endif %}
+
+									</div>
+								</li>
+							</ul>
+						</div>
+						{% endfor %}
+						<!-- Order Total -->
+						<div class="order_total">
+							<div class="order_total_content text-md-right">
+								<div class="order_total_title">Total Earn:</div>
+								<div class="order_total_amount">Kshs {{agentEarn.total}}</div>
+							</div>
+						</div>
+						
+						{% if request.user.is_superuser %}
+						<div class="cart_buttons">
+							{% if agentEarn.isPaid %}
+								<button type="button" class="button cart_button_checkout">Paid</button>
+							{% else %}
+								<a href="{% url 'accounts:agentPay' agentEarn.id %}"><button type="button" class="button cart_button_checkout" >Unpaid</button></a>
+							{% endif %}
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block customScripts %}
+	<script type="text/javascript" src="{% static 'js/cart_custom.js'%}"></script>
+{% endblock %}

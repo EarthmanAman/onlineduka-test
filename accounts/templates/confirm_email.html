@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	<title>onlineduka | resetpassword</title>
+{% endblock %}
+{% block customStyles %}
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'styles/shop_styles.css' %}"> -->
+	<link rel="stylesheet" type="text/css" href="{% static 'plugins/slick-1.8.0/slick.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'plugins/slick-1.8.0/slick-theme.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'styles/shop_responsive.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/
+	product_responsive.css' %}"> -->
+
+{% endblock %}
+{% block content %}
+<br><br>
+	<div class="container">
+		<div class="row">
+			<div class="jumbotron">
+			  <h1 class="display-4">Hello</h1>
+			  <p class="lead">We have sent a verification to you email address. Verify your email and complete the sign up. Thank you</p>
+			  <hr class="my-4">
+			  <p></p>
+			  <p class="lead">
+			    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+			  </p>
+			</div>
+	
+	</div>
+{% endblock %}
+{% block customScripts %}
+<!-- 	<script src="{% static 'js/shop_custom.js' %}"></script>
+	<script src="{% static 'js/product_custom.js' %}"></script> -->
+	<script src="{% static 'plugins/slick-1.8.0/slick.min.js' %}"></script>
+	<script src="{% static 'js/custom.js' %}"></script>
+{% endblock %}

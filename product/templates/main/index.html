@@ -1,0 +1,462 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	<title>onlineduka</title>
+{% endblock %}
+
+{% block desc %}
+	<meta name="description" content="Onlineduka is an ecommerce in Kenya. A shop where you can find all products">
+{% endblock %}
+
+{% block customStyles %}
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'styles/shop_styles.css' %}"> -->
+	<link rel="stylesheet" type="text/css" href="{% static 'plugins/slick-1.8.0/slick.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'plugins/slick-1.8.0/slick-theme.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'styles/shop_responsive.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/
+	product_responsive.css' %}"> -->
+
+{% endblock %}
+
+
+{% block content %}
+	
+		<!-- Banner -->
+
+	<!-- <div class="banner">
+		<div class="banner_background" style="background-image:url({% static 'images/banner_background.jpg' %})"></div>
+		<div class="container fill_height">
+			<div class="row fill_height">
+				<div class="banner_product_image img-fluid"><img src="{{specials.first.prodmedia_set.first.pic.url}}" alt="" width="400" height="380" style="background-color: none;"></div>
+				<div class="col-lg-5 offset-lg-4 fill_height">
+					<div class="banner_content">
+						<h1 class="banner_text">{{specials.first.subCategory.name}}</h1>
+						<div class="banner_price">
+							{% if specials.first.origPrice%}<span>Kshs {{specials.first.origPrice}}</span>{% endif %}Kshs {{specials.first.price}}</div>
+						<div class="banner_product_name">{{specials.first.name}}</div>
+						<div class="button banner_button"><a href="{% url 'product:prod' specials.first.slug%}">Shop Now</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+ -->
+ 	<!--
+	<div class="banner2 animated bounceIn">
+		<h1>Bargain Now!!!</h1>
+		<h2>Choose an item and bargain up to 50% off!!!</h2>
+		<h1>&</h1>
+		<h3>You can lipa polepole!!!</h3>
+			<button>trial</button></h2> 
+	</div>-->
+
+	<!-- Characteristics -->
+
+	<div class="characteristics">
+		<div class="container">
+			<div class="row">
+
+				<!-- Char. Item -->
+				<div class="col-lg-6 col-md-6 char_col">
+					
+					<div class="char_item d-flex flex-row align-items-center justify-content-start">
+						<div class="char_icon"><img src="{% static 'images/char_1.png' %}" alt=""></div>
+						<div class="char_content">
+							<div class="char_title">Free Delivery</div>
+							<div class="char_subtitle">Within 24 Hours</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Char. Item -->
+				<div class="col-lg-6 col-md-6 char_col">
+					
+					<div class="char_item d-flex flex-row align-items-center justify-content-start">
+						<div class="char_icon"><img src="{% static 'images/char_2.png' %}" alt=""></div>
+						<div class="char_content">
+							<div class="char_title">Free Return</div>
+							<!-- <div class="char_subtitle">from $50</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Deals of the week -->
+	<div class="deals_featured">
+		<div class="container">
+			<div align="left" class="alert alert-heading">
+						<h2>Hot Deal</h2>
+					</div>
+			<div class="row" style="margin-bottom: 50px;">
+			
+					
+					<!-- Deals -->
+					{% for prod in prods%}
+						<div class="col-lg-2 col-md-3 col-6" style="">
+							<div class="border_active"></div>
+							<div class="product_item discount flex-column align-items-center text-center">
+								<div class="product_image d-flex flex-column align-items-center justify-content-center"><a href="{% url 'product:prod' prod.slug %}"><img src="{{prod.prodmedia_set.first.pic.url}}" alt="" height="120" style="width: auto;"></a></div>
+								<div class="product_content">
+									<div class="product_price discount">Kshs {{prod.price}} 
+										<!-- {% if prod.origPrice%}<span> {{prod.origPrice}}</span>{% endif %} --></div>
+									<div style="height: 60px;"><a href="{% url 'product:prod' prod.slug %}" style="color: black;">{{prod.name}}</a></div>
+									<div class="">
+										<form action="{% url 'cart:createCartProd' prod.slug %}" method="get" class="cart-form-ajax">
+											
+
+										<button class="btn btn-primary" type="submit">Add to Cart</button>
+									</form>
+									</div>
+								</div>
+								<div class="product_fav">
+								<a class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Bargain</a></div>
+								<ul class="product_marks">
+									{% if hotDeal.origPrice%}
+									<li class="product_mark product_discount">-{{hotDeal.discount}}%</li>
+									{% endif %}
+									<li class="product_mark product_new">new</li>
+								</ul>
+							</div>
+						</div>
+						{% endfor %}
+									
+					
+					<!-- Featured -->
+
+
+			</div>
+		</div>
+	</div>
+
+
+	<div class="banner_advert" animate heartBeat>
+		<div class="big-text animate heartBeat">
+			<h1>Do you want to become our Agent??</h1>
+		</div>
+		<!-- <div><h4>Just One click away</h4></div> -->
+		<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Click me!</a>
+	</div>
+
+
+	<!-- Hot New Arrivals -->
+
+	<div class="new_arrivals" id="hotArrivals">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="tabbed_container">
+						<div class="tabs clearfix tabs-right">
+							<div class="new_arrivals_title">Hot New Arrivals</div>
+							<ul class="clearfix">
+								<li class="active">Featured</li>
+								<!-- <li>Audio & Video</li>
+								<li>Laptops & Computers</li> -->
+							</ul>
+							<div class="tabs_line"><span></span></div>
+						</div>
+						<div class="row">
+							<div class="col-lg-9" style="z-index:1;">
+
+								<!-- Product Panel -->
+													<div class="deals_featured">
+								<div class="container">
+									
+									<div class="row" style="margin-bottom: 50px;">
+									
+											
+											<!-- Deals -->
+											{% for newArrival in newArrivals%}
+											<div class="col-lg-3 col-md-3 col-6" style="">
+												<div class="border_active"></div>
+												<div class="product_item discount flex-column align-items-center text-center" >
+													<div class="product_image d-flex flex-column align-items-center justify-content-center"><a href="{% url 'product:prod' newArrival.slug %}"><img src="{{newArrival.prodmedia_set.first.pic.url}}" alt="" height="120" style="width: auto;"></a></div>
+													<div class="product_content">
+														<div class="product_price discount">Kshs {{newArrival.price}} 
+															<!-- {% if prod.origPrice%}<span> {{prod.origPrice}}</span>{% endif %} --></div>
+														<div style="height: 60px; "><a href="{% url 'product:prod' newArrival.slug %}" style="color: black;">{{newArrival.name}}</a></div>
+
+														<div class="">
+															<form action="{% url 'cart:createCartProd' newArrival.slug %}" method="get" class="cart-form-ajax">
+																{% csrf_token %}
+
+															<button class="btn btn-primary" type="submit" style="width: 80%;">Add to Cart</button>
+														</form>
+														</div>
+													</div>
+													<div class="product_fav">
+													<a class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Bargain</a></div>
+													<ul class="product_marks">
+														{% if newArrival.origPrice%}
+														<li class="product_mark product_discount">-{{newArrival.discount}}%</li>
+														{% endif %}
+														<li class="product_mark product_new">{{newArrival.status}}</li>
+													</ul>
+												</div>
+											</div>
+											{% endfor %}
+											
+											
+											<!-- Featured -->
+
+
+									</div>
+								</div>
+							</div>
+								
+
+							</div>
+
+							<div class="col-lg-3">
+								<div class="arrivals_single clearfix">
+									<div class="d-flex flex-column align-items-center justify-content-center">
+										<div class="arrivals_single_image"><a href="{% url 'product:prod' newArrivals.first.slug %}"><img src="{{newArrivals.first.prodmedia_set.first.pic.url }}" alt=""></a></div>
+										<div class="arrivals_single_content">
+											<div class="arrivals_single_category"><a href="{% url 'product:shop' newArrivals.first.subCategory.slug %}">{{newArrivals.first.subCategory.name}}</a></div>
+											<div class="arrivals_single_name_container clearfix">
+												<div class="arrivals_single_name"><a href="{% url 'product:prod' newArrivals.first.slug%}">{{newArrivals.first.name}}</a></div>
+												<div class="arrivals_single_price text-right">{{newArrivals.first.price}}</div>
+											</div>
+											<!-- <div class="rating_r rating_r_4 arrivals_single_rating"><i></i><i></i><i></i><i></i><i></i></div> -->
+											<form action="{% url 'cart:createCartProd' newArrivals.first.slug %}" method="get" class="cart-form-ajax"><button class="arrivals_single_button" type="submit">Add to Cart</button></form>
+										</div>
+										<div class="product_fav">
+											<a class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Bargain</a></div>
+										<ul class="arrivals_single_marks product_marks">
+											<li class="arrivals_single_mark product_mark product_new">{{newArrivals.first.status}}</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+						</div>
+								
+					</div>
+				</div>
+			</div>
+		</div>		
+	</div>
+
+	<!-- Best Sellers -->
+
+	<div class="best_sellers" id="topSellings">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="tabbed_container">
+						<div class="tabs clearfix tabs-right">
+							<div class="new_arrivals_title">Top Selling</div>
+							<ul class="clearfix">
+								<li class="active">Top 20</li>
+								<!-- <li>Audio & Video</li>
+								<li>Laptops & Computers</li> -->
+							</ul>
+							<div class="tabs_line"><span></span></div>
+						</div>
+
+						<div class="bestsellers_panel panel active">
+
+							<!-- Best Sellers Slider -->
+
+							<div class="bestsellers_slider slider">
+
+								<!-- Best Sellers Item -->
+								{% for topSelling in topSellings %}
+								<div class="bestsellers_item discount">
+									<div class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
+										<div class="bestsellers_image"><a href="{% url 'product:prod' topSelling.slug %}"><img src="{{topSelling.prodmedia_set.first.pic.url}}" alt=""></a></div>
+										<div class="bestsellers_content">
+											<div class="bestsellers_category"><a href="{% url 'product:shop' topSelling.slug %}">{{topSelling.subCategory.name}}</a></div>
+											<div class="bestsellers_name"><a href="{% url 'product:prod' topSelling.slug %}">{{topSelling.name}}</a></div>
+											<!-- <div class="rating_r rating_r_4 bestsellers_rating"><i></i><i></i><i></i><i></i><i></i></div> -->
+											<div class="bestsellers_price discount">kshs {{topSelling.price }}
+												{% if topSelling.origPrice %}<span>kshs {{topSelling.origPrice }}</span>{% endif %}</div>
+										</div>
+									</div>
+									<div class="product_fav" align="right">
+											<a class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Bargain</a></div>
+									<ul class="bestsellers_marks">
+										{% if topSelling.origPrice %}
+										<li class="bestsellers_mark bestsellers_discount">-{{topSelling.discount}}%</li>
+										{% endif %}
+										<li class="bestsellers_mark bestsellers_new">{{topSelling.status }}</li>
+									</ul>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+
+					</div>
+						
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Adverts -->
+
+	<div class="banner_advert" animate heartBeat>
+		<div class="big-text animate heartBeat">
+			<h1>Do you want to Sell your items</h1>
+		</div>
+		<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">Contact us!</a> 
+	</div>
+
+
+
+	<!-- Trends -->
+
+	<div class="trends">
+		<div class="trends_background" style="background-image:url(images/trends_background.jpg)"></div>
+		<div class="trends_overlay"></div>
+		<div class="container">
+			<div class="row">
+
+				<!-- Trends Content -->
+				<div class="col-lg-3">
+					<div class="trends_container">
+						<h2 class="trends_title">Trends 2019	</h2>
+						<div class="trends_text"><p>Trending products</p></div>
+						<div class="trends_slider_nav">
+							<div class="trends_prev trends_nav"><i class="fas fa-angle-left ml-auto"></i></div>
+							<div class="trends_next trends_nav"><i class="fas fa-angle-right ml-auto"></i></div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Trends Slider -->
+				<div class="col-lg-9">
+					<div class="trends_slider_container">
+
+						<!-- Trends Slider -->
+
+						<div class="owl-carousel owl-theme trends_slider">
+
+							<!-- Trends Slider Item -->
+							{% for special in specials %}
+							<div class="owl-item">
+								<div class="trends_item is_new">
+									<div class="trends_image d-flex flex-column align-items-center justify-content-center"><a href="{% url 'product:prod' special.slug %}"><img src="{{special.prodmedia_set.first.pic.url }}" alt="" height="200"></a></div>
+									<div class="trends_content">
+										<div class="trends_category"><a href="{% url 'product:shop' special.subCategory.slug %}">{{special.subCategory.name }}</a></div>
+										<div class="trends_info clearfix">
+											<div class="trends_name"><a href="{% url 'product:prod' special.slug %}">{{special.name}}</a></div>
+											<div class="trends_price">kshs {{special.price }}</div>
+										</div>
+									</div>
+									<ul class="trends_marks">
+										{% if special.origPrice %}
+										<li class="trends_mark trends_discount">-{{special.discount}}%</li>
+										{% endif %}
+										<li class="trends_mark trends_new">{{special.status}}</li>
+									</ul>
+									<div class="product_fav" align="right">
+											<a class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Bargain</a></div>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+<!-- 	<div class="characteristics" id="bargain">
+		<div class="container">
+				<div align="center">
+					<h2>Bargain Through</h2>
+				</div>
+			<div class="row">
+
+				
+				<div class="col-lg-6 col-md-6 char_col">
+					<div class="char_item d-flex flex-row align-items-center justify-content-start">
+						{% if not cartIn.isOrdered and cartIn.cartprod_set.all %}
+						<div class="char_icon"><a href="https://api.whatsapp.com/send?phone=254728206830&text=Hi.
+
+							I would like to enquire/bargain order:
+    
+							{{request.build_absolute_uri}}cart/{{cartIn.id}}/"><img src="{% static 'images/whatsapp.jpg' %}" alt="" width="50" height="50"></a></div>
+						{% else %}
+							<div class="char_icon"><a><img src="{% static 'images/whatsapp.jpg' %}" alt="" width="50" height="50"></a></div>
+						{% endif %}
+						<div class="char_content">
+							<div class="char_title"><h3>Through Whatsapp</h3></div>
+							
+						</div>
+					</div>
+				</div>
+
+			
+				
+				<div class="col-lg-6 col-md-6 char_col">
+					
+					<div class="char_item d-flex flex-row align-items-center justify-content-start">
+						<div class="char_icon"><img src="{% static 'images/call.jpg' %}" alt="" width="40" height="40"></div>
+						<div class="char_content">
+							<div class="char_title"><h3>Phone number</h3></div>
+							<div class="char"><h5>072820 6830</h5></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+ -->
+
+		<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">About Our agents</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Join Online duka sales team and earn commissions on sales made to customers that you refer to us. Order items for your friends, collegues, family etc. You can earn as much as you wish from the comfort of your home
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="{% url 'accounts:createAgent' %}"><button type="button" class="btn btn-primary">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+	<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">About Our Sellers</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do you own a shop or a boutique or any other form of business enterprise? You can sell your items on online duka and access a large number of customers from all parts of the country.<br>Double your sell and grow with us!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="{% url 'accounts:contact' %}"><button type="button" class="btn btn-primary">Continue</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block customScripts %}
+<!-- 	<script src="{% static 'js/shop_custom.js' %}"></script>
+	<script src="{% static 'js/product_custom.js' %}"></script> -->
+	<script src="{% static 'plugins/slick-1.8.0/slick.min.js' %}"></script>
+	<script src="{% static 'js/custom.js' %}"></script>
+{% endblock %}

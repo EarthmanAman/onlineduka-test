@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	<title>onlineduka | add</title>
+{% endblock %}
+
+{% block customStyles%}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/contact_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/contact_responsive.css' %}">
+
+{% endblock %}
+
+{% block content %}
+		
+	<div class="contact_form">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="contact_form_container">
+						{% if success%}
+						<div align="center" class="alert alert-success">
+							<h3>Product added successfully</h3>
+						</div><br>
+						{% endif %}
+						<div class="contact_form_title">ADD PRODUCT</div>
+							<form action="" method="post" class="form-group" enctype="multipart/form-data">
+								{% csrf_token %}
+								<div>
+									{{form.media}}
+									{% for field in form %}
+										<br>
+										{{field.label_tag}}<br>
+										{{field}}
+									{% endfor %}
+								</div>
+		
+			
+						<div class="contact_form_title">Pictures</div>
+					
+								<div>
+									<label>Picture 1</label>
+									<input type="file" name="pic1" class="form-control">
+									<label>Picture 1</label>
+									<input type="file" name="pic2" class="form-control">
+									<label>Picture 1</label>
+									<input type="file" name="pic3" class="form-control">
+								</div>
+								<br>
+							<div align="center">
+								<button type="submit" class="btn btn-primary">Add</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel"></div>
+	</div>
+
+	<!-- Map -->
+
+
+{% endblock %}
+
+{% block customScripts %}
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+	<script src="{% static 'js/contact_custom.js' %}"></script>
+{% endblock %}

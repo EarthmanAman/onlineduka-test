@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	<title>onlineduka | login</title>
+{% endblock %}
+
+{% block customStyles%}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/contact_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/contact_responsive.css' %}">
+
+{% endblock %}
+
+{% block content %}
+	<!-- Contact Form -->
+
+	<div class="contact_form">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="contact_form_container">
+						<div class="contact_form_title">Login</div>
+
+						<form action="" id="contact_form" method="post">
+							{% csrf_token %}
+							<div class="form-group">
+								<label>UPhone Number</label>
+								<input type="text" id="contact_form_name" class="form-control" placeholder="Your name" required="required" data-error="Name is required." name="username">
+								<label>Password</label>
+								<input type="password" id="contact_form_phone" class="form-control" placeholder="Your phone number" name="password">
+							</div>
+						
+							<div class="contact_form_button">
+								<button type="submit" class="button contact_submit_button">Login</button>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel"></div>
+	</div>
+
+{% endblock %}
+
+{% block customScripts %}
+	=
+	<script src="{% static 'js/contact_custom.js' %}"></script>
+{% endblock %}

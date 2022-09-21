@@ -1,0 +1,172 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+{% block title %}
+	<title>onlineduka | cart</title>
+{% endblock %}
+
+{% block customStyles%}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_responsive.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_responsive.css' %}">
+{% endblock%}
+
+{% block content %}
+	<!-- Cart -->
+
+	<div class="cart_section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="cart_container">
+						{% if ordered %}
+							<div class="alert alert-success">
+								<h3>Order was placed successfully. We will contact you in a while. In case of any queries regarding your order, Contact: 0728206830 / 0705498000</h3>
+							</div>
+						{% endif %}
+
+						{% if cartIn.cartprod_set.count is 1 %}
+							<div class="alert alert-success">
+								<h3>Thank you for choosing online duka</h3>
+							</div>
+							<div class="cart_buttons" style="margin-top: 20px;">
+
+							<a href="{% url 'product:index'%}"><button type="button" class="btn btn-warning">Continue shopping</button></a>
+							<a><button type="button" class="btn btn-success"  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Checkout</button></a>
+						</div>
+						{% endif %}
+						{% if wrongPromo %}
+								<div class="alert alert-danger">
+								<h3>The promo code you enter is incorrect. Try again</h3>
+							</div>
+						{% endif %}
+						<div class="cart_title">Checking Out</div>
+
+						{% for prod in cartIn.cartprod_set.all %}
+						<div class="cart_items">
+							<ul class="cart_list">
+								<li class="cart_item clearfix">
+									<div class="cart_item_image"><img src="{{prod.prod.prodmedia_set.first.pic.url}}" alt=""></div>
+									<div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+										<div class="cart_item_name cart_info_col">
+											<div class="cart_item_title">Name</div>
+											<div class="cart_item_text">{{prod.prod.name}}</div>
+										</div>
+						<!-- 				<div class="cart_item_color cart_info_col">
+											<div class="cart_item_title">Color</div>
+											<div class="cart_item_text"><span style="background-color:#999999;"></span>Silver</div>
+										</div> -->
+										<div class="cart_item_quantity cart_info_col">
+											<div class="cart_item_title">Quantity</div>
+											<div class="cart_item_text">{{prod.quantity}}</div>
+										</div>
+										<div class="cart_item_price cart_info_col">
+											<div class="cart_item_title">Price</div>
+											<div class="cart_item_text">Kshs {{prod.prod.price }}</div>
+										</div>
+										<div class="cart_item_total cart_info_col">
+											<div class="cart_item_title">Total</div>
+											<div class="cart_item_text">Kshs {{prod.total}}</div>
+										</div>
+										<div class="cart_item_total cart_info_col">
+											<div class="cart_item_title">Del</div>
+											<div class="cart_item_text"><a href="{% url 'cart:deleteCartProd' prod.id %}" class="btn btn-danger">Del</a></div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						{% endfor %}
+						<!-- Order Total -->
+						{% if cartIn.cartprod_set.count is 0 %}
+							<div align="center" class="alert alert-warning">
+								<h3>Your cart is empty</h3>
+							</div>
+						{% else %}
+						<div class="order_total">
+							<div class="order_total_content text-md-right">
+								<div class="order_total_title">Order Total:</div>
+								<div class="order_total_amount">Kshs {{cartIn.total}}</div>
+							</div>
+						</div>
+
+						<div class="order_total">
+							<div class="order_total_content text-md-right">
+								<div class="order_total_title"><h4>Bargain</h4></div>
+								<div class="order_total_amount">072820 6830 </div>
+							</div>
+						</div><br>
+						<div align="right">
+							<a href="https://api.whatsapp.com/send?phone=254728206830&text=Hi.
+
+								I would like to complete this order using whatsapp:
+
+								 {{request.build_absolute_uri}}{{cartIn.id}}/"><img src="{% static 'images/orderWhatsapp.png'%}" width="200" height="60"></a>
+						</div>
+
+						<div class="cart_buttons" id="checkout">
+							<a href="{% url 'product:index'%}"><button type="button" class="btn btn-warning">Continue shopping</button></a>
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Checkout</button>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+        	{% csrf_token %}
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="recipient-name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Location:</label>
+            <input type="text" class="form-control" id="recipient-name" name="location" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Phone:</label>
+            <input type="number" class="form-control" id="recipient-name" name="phoneNumber" required>
+          </div>
+          <div class="form-group">
+          	{% if wrongPromo%}
+          		<p style="color: red;">The promocode is wrong </p>
+          	{% endif %}
+            <label for="recipient-name" class="col-form-label">Promo Code (optional)</label>
+            <input type="text" class="form-control" id="recipient-name" name="promoCode">
+          </div>
+          <!-- <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div> -->
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Place order</button>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        <!-- <button type="submit" class="btn btn-primary">Place order</button> -->
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block customScripts %}
+	<script type="text/javascript" src="{% static 'js/cart_custom.js'%}"></script>
+{% endblock %}

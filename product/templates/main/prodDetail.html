@@ -1,0 +1,218 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+	<title>{{prod.name}}</title>
+{% endblock %}
+{% block desc %}
+	<meta name="description" content="{{prod.desc}}">
+{% endblock %}
+{% block customStyles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}">
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'styles/shop_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_responsive.css' %}"> -->
+{% endblock %}
+{% block content %}
+	<!-- Single Product -->
+
+	<div class="single_product">
+		<div class="container">
+			<div class="row">
+
+				<!-- Images -->
+				<div class="col-lg-2 order-lg-1 order-2">
+					<ul class="image_list">
+						{% for prodMedia in prod.prodmedia_set.all %}
+							{% if prodMedia.pic %}
+								<li data-image="{{prodMedia.pic.url }}"><img src="{{prodMedia.pic.url}}" alt="image"></li>
+							{% endif %}
+						{% endfor %}
+					</ul>
+				</div>
+
+				<!-- Selected Image -->
+				<div class="col-lg-5 order-lg-2 order-1">
+					<div class="image_selected">
+						{% if prod.prodmedia_set.first.pic %}
+							<img class="img-fluid" src="{{prod.prodmedia_set.first.pic.url}}" alt="image">
+						{% else %}
+							<img class="img-fluid" src="" alt="image">
+						{% endif %}
+					</div>
+					
+					<div id="prodMob">
+						<div class="product_name" style=""><h4>{{prod.name}}</h4></div>
+						<div class="product_name" style="">
+							<h5>Brand: <a href="{% url 'product:shop' prod.subCategory.slug %}">{{prod.subCategory.name}}</a> | <a href="#similar">Similar products</a></h5> 
+
+						</div>
+						<div class=""><h4>Kshs. {{prod.price}}</h4></div>
+					</div>
+				</div>
+
+				<!-- Description -->
+				<div class="col-lg-5 order-3">
+					<br>
+					<div >
+							<button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-success">Bargain</button>
+							<form method="get" action="{% url 'cart:createCartProd' prod.slug %}" class="cart-form-ajax">
+							<input type="image" src="{% static 'images/buyNow.png'%}" style="width: 40%;">
+							</form>
+						</div>
+					<div class="product_description">
+						<div class="product_category">{{prod.subCategory.name}}</div>
+						<div class="product_name">{{prod.name}}</div>
+						<!-- <div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div> -->
+						<div class="product_text"><p>{{prod.desc | safe}}</p></div>
+						<div class="order_info d-flex flex-row">
+							<form action="{% url 'cart:createCartProd' prod.slug %}" method="get" class="cart-form-ajax">
+								{% csrf_token %}
+								<div class="clearfix" style="z-index: 1000;">
+
+									<!-- Product Quantity -->
+									<div class="product_quantity clearfix">
+										<span>Quantity: </span>
+										<input id="quantity_input" type="text" pattern="[0-9]*" value="1" name="quantity">
+										<div class="quantity_buttons">
+											<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
+											<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+										</div>
+									</div>
+
+									<!-- Product Color -->
+						<!-- 			<ul class="product_color">
+										<li>
+											<span>Color: </span>
+											<div class="color_mark_container"><div id="selected_color" class="color_mark"></div></div>
+											<div class="color_dropdown_button"><i class="fas fa-chevron-down"></i></div>
+
+											<ul class="color_list">
+												<li><div class="color_mark" style="background: #999999;"></div></li>
+												<li><div class="color_mark" style="background: #b19c83;"></div></li>
+												<li><div class="color_mark" style="background: #000000;"></div></li>
+											</ul>
+										</li>
+									</ul> -->
+
+								</div>
+
+								<div class="product_price">Kshs. {{prod.price}}</div>
+								<div class="button_container">
+									<button type="submit" class="btn btn-primary">Add to Cart</button>
+									<button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-success">Bargain</button><br><br>
+									
+								</div><br>
+								<div>
+									<a href="https://api.whatsapp.com/send?phone=254728206830&text=Hi.  
+
+									I would like to order product:  
+
+									{{request.build_absolute_uri}}"><img src="{% static 'images/orderWhatsapp.png'%}" width="200" height="60"></a>
+								</div>
+								
+								
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="container">
+	<div class="row">
+		<div class="alert alert-heading">
+			<h3>Product Details/Specifications</h3>
+			<div class="product_text"><p>{{prod.detail | safe}}</p></div>
+		</div>
+	</div>
+	</div>
+	<div class="viewed">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="viewed_title_container">
+						<h3 class="viewed_title">Related Products</h3>
+						<div class="viewed_nav_container">
+							<div class="viewed_nav viewed_prev"><i class="fas fa-chevron-left"></i></div>
+							<div class="viewed_nav viewed_next"><i class="fas fa-chevron-right"></i></div>
+						</div>
+					</div>
+
+					<div class="viewed_slider_container">
+						
+						<!-- Recently Viewed Slider -->
+
+						<div class="owl-carousel owl-theme viewed_slider">
+							
+							<!-- Recently Viewed Item -->
+							{% for relatedProd in relatedProds %}
+							<div class="owl-item">
+								<div class="viewed_item  d-flex flex-column align-items-center justify-content-center text-center">
+									<div class="viewed_image"><a href="{% url 'product:prod' relatedProd.slug %}"><img src="{{relatedProd.prodmedia_set.first.pic.url}}" alt=""></a></div><br>
+									<div class="viewed_content text-center">
+										<div class="viewed_price">Kshs. {{relatedProd.price}}
+											{% if relatedProd.origPrice %}<span>{{relatedProd.origPrice}}</span>{% endif %}</div>
+										<div class="viewed_name"><a href="{% url 'product:prod' relatedProd.slug %}">{{relatedProd.name}}</a></div>
+									</div>
+									<ul class="item_marks">
+										{% if relatedProd.origPrice%}
+										<li class="item_mark item_discount">-{{relatedProd.origPrice}}%</li>
+										{% endif %}
+										<li class="item_mark item_new">{{relatedProd.status}}</li>
+									</ul>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+<!-- Bargain modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Bargain</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        You can bargain your price through the following way. Just click one.
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        <a href="https://api.whatsapp.com/send?phone=254728206830&text=Hi.
+
+			I would like to enquire/bargain product:
+
+			{{request.build_absolute_uri}}" class="btn btn-success">Whatsapp</a>
+        <button type="button" class="btn btn-primary"><a href="tel:+254728206830" style="color: black;">Click to call : 0728206830</a></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock%}
+{% block customScripts %}
+<script type="text/javascript">
+	function displayBargain(event){
+		if (document.getElementById('bargain').style.display == "none"){
+			document.getElementById('bargain').style.display = "block";
+		}
+		else {
+			document.getElementById('bargain').style.display = "none";
+		}
+	}
+</script>
+	<!-- <script src="{% static 'js/shop_custom.js' %}"></script> -->
+	<script src="{% static 'js/product_custom.js' %}"></script>
+{% endblock %}
